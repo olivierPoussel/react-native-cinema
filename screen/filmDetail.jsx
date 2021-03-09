@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native'
 import {convertMinsToTime} from '../helpers/timeHelper'
 
 const filmDetail = ({navigation, route}) => {
@@ -27,10 +27,10 @@ const filmDetail = ({navigation, route}) => {
     const formatDate = (dateString) => {
         const date = Date.parse(dateString)
         const dateObject = new Date(date)
-        return dateObject.toLocaleDateString('en-US')
+        return dateObject.toLocaleDateString('fr-FR')
     }
     return (
-        <View style={styles.view}>
+        <ScrollView style={styles.view}>
             <Text style={styles.txt}>{film.titre}</Text>
             <Text style={styles.txt}>Résalier par {film.realisateur.prenom + ' ' + film.realisateur.nom}</Text>
             <Text style={styles.txt}>Le film dure {convertMinsToTime(film.duree)}</Text>
@@ -45,9 +45,9 @@ const filmDetail = ({navigation, route}) => {
                 })}
             </View>
             {
-                isLoading ? (<ActivityIndicator size="large" />) : (seances.map((seance) => <Text>{formatDate(seance.dateSeance)}</Text>))
+                isLoading ? (<ActivityIndicator size="large" />) : (seances.map((seance, index) => <Text key={index}>{formatDate(seance.dateSeance)}</Text>))
             }
-        </View>
+        </ScrollView>
     )
 }
 
